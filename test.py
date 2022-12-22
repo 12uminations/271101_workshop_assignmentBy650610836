@@ -7,10 +7,12 @@ import mediapipe as mp
 Nfing= 5
 Fing=["Thump", "Index Finger", "Middle Finger", "Ring Finger", "Little Finger"]
 #id=list
-cy0,cy1,cy2,cy3,cy4,cy5,cy6,cy7,cy8,cy9,cy10,cy11,cy12,cy13,cy14,cy15,cy16,cy17,cy18,cy19,cy20 = cy()
-cx0,cx1,cx2,cx3,cx4,cx5,cy6,cx7,cx8,cx9,cx10,cx11,cx12,cx13,cx14,cx15,cx16,cx17,cx18,cx19,cx20 = 0
-cy=[cy0,cy1,cy2,cy3,cy4,cy5,cy6,cy7,cy8,cy9,cy10,cy11,cy12,cy13,cy14,cy15,cy16,cy17,cy18,cy19,cy20]
-cx=[cx0,cx1,cx2,cx3,cx4,cx5,cy6,cx7,cx8,cx9,cx10,cx11,cx12,cx13,cx14,cx15,cx16,cx17,cx18,cx19,cx20]
+#cy0,cy1,cy2,cy3,cy4,cy5,cy6,cy7,cy8,cy9,cy10,cy11,cy12,cy13,cy14,cy15,cy16,cy17,cy18,cy19,cy20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#cx0,cx1,cx2,cx3,cx4,cx5,cy6,cx7,cx8,cx9,cx10,cx11,cx12,cx13,cx14,cx15,cx16,cx17,cx18,cx19,cx20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+#id0,id1,id2,id3,id4,id5,id6,id7,id8,id9,id9,id10,id11,id2,id13,id14,id15,id16,id17,id18,id19,id20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+cy=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+cx=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+#id=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 num=1
 cap = cv2.VideoCapture(0)
 
@@ -32,9 +34,9 @@ while True:
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 for num in range(20):
                     #id.insert(num,num)
-                    num=int(id)
+                    id[num] = int(id)
                     cy[num] = cy
-                    cx[num] =cx
+                    cx[num] = cx
                     num +=1
                 
             if cy[8] > cy[7]:

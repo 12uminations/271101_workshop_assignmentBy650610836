@@ -86,36 +86,36 @@ while True:
             if cy8 > cy6:
                 if "Index Finger" in Fing:
                     Fing.remove("Index Finger")
-            if cy8 < cy6:
+            elif cy8 < cy6:
                 if "Index Finger" not in Fing:
                     Fing.insert(1,"Index Finger")
-            if cy12 > cy10:
+            elif cy12 > cy10:
                 if "Middle Finger" in Fing:
                     Fing.remove("Middle Finger")
-            if cy12 < cy10:
+            elif cy12 < cy10:
                 if "Middle Finger" not in Fing:
                     Fing.insert(2,"Middle Finger")
-            if cy16 > cy14:
+            elif cy16 > cy14:
                 if "Ring Finger" in Fing:
                     Fing.remove("Ring Finger")
-            if cy16 < cy14:
+            elif cy16 < cy14:
                 if "Ring Finger" not in Fing:
                     Fing.insert(3,"Ring Finger")
-            if cy20 > cy18:
+            elif cy20 > cy18:
                 if "Little Finger" in Fing:
                     Fing.remove("Little Finger")
-            if cy20 < cy18:
+            elif cy20 < cy18:
                 if "Little Finger" not in Fing:
                     Fing.insert(4,"Little Finger")
             #Thump x axis *********************************************************
-            if cx17 > cx5: 
+            elif cx17 > cx5: 
                 if cx4 > cx3:
                     if "Thump" in Fing:
                         Fing.remove("Thump")
                 if cx4 < cx3:
                     if "Thump" not in Fing:
                         Fing.insert(0,"Thump")
-            if cx17 < cx5:
+            elif cx17 < cx5:
                 if cx4 < cx3:
                     if "Thump" in Fing:
                         Fing.remove("Thump")
@@ -123,7 +123,7 @@ while True:
                     if "Thump" not in Fing:
                         Fing.insert(0,"Thump")
             #If hand point down *********************************************************
-            if cy0 < cy17:
+            elif cy0 < cy17:
                 if cy8 < cy6:
                     if "Index Finger" in Fing:
                         Fing.remove("Index Finger")
@@ -148,75 +148,23 @@ while True:
                 if cy20 > cy18:
                     if "Little Finger" not in Fing:
                         Fing.insert(4,"Little Finger")
-            #Thump y axis and otther fingers x axis *********************************************************
-            if cx0 > cx5:
-                if cx4 > cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 < cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-                if cx8 > cx6:
-                    if "Index Finger" in Fing:
-                     Fing.remove("Index Finger")
-                if cx8 < cx6:
-                    if "Index Finger" not in Fing:
-                        Fing.insert(1,"Index Finger")
-                if cx12 > cx10:
-                    if "Middle Finger" in Fing:
-                        Fing.remove("Middle Finger")
-                if cx12 < cx10:
-                    if "Middle Finger" not in Fing:
-                        Fing.insert(2,"Middle Finger")
-                if cx16 > cx14:
-                    if "Ring Finger" in Fing:
-                        Fing.remove("Ring Finger")
-                if cx16 < cy14:
-                    if "Ring Finger" not in Fing:
-                        Fing.insert(3,"Ring Finger")
-                if cx20 > cx18:
-                    if "Little Finger" in Fing:
-                        Fing.remove("Little Finger")
-                if cx20 < cx18:
-                    if "Little Finger" not in Fing:
-                        Fing.insert(4,"Little Finger")
-            if cx0 < cx5:
-                if cy4 < cy3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cy4 > cy3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-                if cx4 < cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 > cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-                if cx8 < cx6:
-                    if "Index Finger" in Fing:
-                     Fing.remove("Index Finger")
-                if cx8 > cx6:
-                    if "Index Finger" not in Fing:
-                        Fing.insert(1,"Index Finger")
-                if cx12 < cx10:
-                    if "Middle Finger" in Fing:
-                        Fing.remove("Middle Finger")
-                if cx12 > cx10:
-                    if "Middle Finger" not in Fing:
-                        Fing.insert(2,"Middle Finger")
-                if cx16 < cx14:
-                    if "Ring Finger" in Fing:
-                        Fing.remove("Ring Finger")
-                if cx16 > cy14:
-                    if "Ring Finger" not in Fing:
-                        Fing.insert(3,"Ring Finger")
-                if cx20 < cx18:
-                    if "Little Finger" in Fing:
-                        Fing.remove("Little Finger")
-                if cx20 > cx18:
-                    if "Little Finger" not in Fing:
-                        Fing.insert(4,"Little Finger")
+            #Thump y axis and other fingers x axis *********************************************************
+            # if cx0 > cx5:
+            #     if cx4 > cx3:
+            #         if "Thump" in Fing:
+            #             Fing.remove("Thump")
+            #     if cx4 < cx3:
+            #         if "Thump" not in Fing:
+            #             Fing.insert(0,"Thump")
+                
+            # if cx0 < cx5:
+            #     if cy4 < cy3:
+            #         if "Thump" in Fing:
+            #             Fing.remove("Thump")
+            #     if cy4 > cy3:
+            #         if "Thump" not in Fing:
+            #             Fing.insert(0,"Thump")
+                
             #*******************************************************************************
             Nfing=len(Fing)       
 
