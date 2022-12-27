@@ -6,14 +6,41 @@ import mediapipe as mp
 
 Nfing= 5
 Fing=["Thump", "Index Finger", "Middle Finger", "Ring Finger", "Little Finger"]
-#id=list
-#cy0,cy1,cy2,cy3,cy4,cy5,cy6,cy7,cy8,cy9,cy10,cy11,cy12,cy13,cy14,cy15,cy16,cy17,cy18,cy19,cy20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-#cx0,cx1,cx2,cx3,cx4,cx5,cy6,cx7,cx8,cx9,cx10,cx11,cx12,cx13,cx14,cx15,cx16,cx17,cx18,cx19,cx20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-#id0,id1,id2,id3,id4,id5,id6,id7,id8,id9,id9,id10,id11,id2,id13,id14,id15,id16,id17,id18,id19,id20 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-cy=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-cx=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-#id=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-num=1
+cyX=[None]*21
+cxX=[None]*21
+idX =[None]*21
+num=0
+def Th():
+    if "Thump" in Fing:
+        Fing.remove("Thump")
+def RTh():
+    if "Thump" not in Fing:
+        Fing.insert(0,"Thump")
+def In():
+    if "Index Finger" in Fing:
+        Fing.remove("Index Finger")
+def RIn():
+    if "Index Finger" not in Fing:
+        Fing.insert(1,"Index Finger")
+def Mi():
+    if "Middle Finger" in Fing:
+        Fing.remove("Middle Finger")
+def RMi():
+    if "Middle Finger" not in Fing:
+        Fing.insert(2,"Middle Finger")
+def Ri():
+    if "Ring Finger" in Fing:
+        Fing.remove("Ring Finger")
+def RRi():
+    if "Ring Finger" not in Fing:
+        Fing.insert(3,"Ring Finger")
+def Li():
+    if "Little Finger" in Fing:
+        Fing.remove("Little Finger")
+def RLi():
+    if "Little Finger" not in Fing:
+        Fing.insert(4,"Little Finger")
+
 cap = cv2.VideoCapture(0)
 
 #Call hand pipe line module
@@ -32,51 +59,39 @@ while True:
             for id, lm in enumerate(handLms.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                for num in range(20):
-                    #id.insert(num,num)
-                    id[num] = int(id)
-                    cy[num] = cy
-                    cx[num] = cx
+                for num in range(21):
+                    if id==num:
+                        idX[num] = int(id)
+                        cyX[num] = cy
+                        cxX[num] = cx
                     num +=1
                 
-            if cy[8] > cy[7]:
-                if "Index Finger" in Fing:
-                    Fing.remove("Index Finger")
-            if cy[8] < cy[7]:
-                if "Index Finger" not in Fing:
-                    Fing.insert(1,"Index Finger")
-            if cy[12] > cy[11]:
-                if "Middle Finger" in Fing:
-                    Fing.remove("Middle Finger")
-            if cy[12] < cy[11]:
-                if "Middle Finger" not in Fing:
-                    Fing.insert(2,"Middle Finger")
-            if cy[16] > cy[15]:
-                if "Ring Finger" in Fing:
-                    Fing.remove("Ring Finger")
-            if cy[16] < cy[15]:
-                if "Ring Finger" not in Fing:
-                    Fing.insert(3,"Ring Finger")
-            if cy[20] > cy[19]:
-                if "Little Finger" in Fing:
-                    Fing.remove("Little Finger")
-            if cy[20] < cy[19]:
-                if "Little Finger" not in Fing:
-                    Fing.insert(4,"Little Finger")
-            if cx[17] > cx[5]:
-                if cx[4] > cx[3]:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx[4] < cx[3]:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-            if cx[17] < cx[5]:
-                if cx[4] < cx[3]:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx[4] > cx[3]:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
+            if cyX[8] > cyX[7]:
+                In()
+            if cyX[8] < cyX[7]:
+                RIn()
+            if cyX[12] > cyX[11]:
+                Mi()
+            if cyX[12] < cyX[11]:
+                RMi()
+            if cyX[16] > cyX[15]:
+                Ri()
+            if cyX[16] < cyX[15]:
+                RRi()
+            if cyX[20] > cyX[19]:
+                Li()
+            if cyX[20] < cyX[19]:
+                RLi()
+            if cxX[17] > cxX[5]:
+                if cxX[4] > cxX[3]:
+                    Th()
+                if cxX[4] < cxX[3]:
+                    RTh()
+            if cxX[17] < cxX[5]:
+                if cxX[4] < cxX[3]:
+                    Th()
+                if cxX[4] > cxX[3]:
+                    RTh()
             
                
             Nfing=len(Fing)     

@@ -3,8 +3,42 @@ import cv2
 import mediapipe as mp
 
 Nfing = 5
-Fing="Thump, Index Finger, Middle Finger, Ring Finger, Little Finger"
-num=1
+Fing=["Thump", "Index Finger", "Middle Finger", "Ring Finger", "Pinky"]
+cyX=[None]*21
+cxX=[None]*21
+idX =[None]*21
+num=0
+def Th():
+    if "Thump" in Fing:
+        Fing.remove("Thump")
+def RTh():
+    if "Thump" not in Fing:
+        Fing.insert(0,"Thump")
+def In():
+    if "Index Finger" in Fing:
+        Fing.remove("Index Finger")
+def RIn():
+    if "Index Finger" not in Fing:
+        Fing.insert(1,"Index Finger")
+def Mi():
+    if "Middle Finger" in Fing:
+        Fing.remove("Middle Finger")
+def RMi():
+    if "Middle Finger" not in Fing:
+        Fing.insert(2,"Middle Finger")
+def Ri():
+    if "Ring Finger" in Fing:
+        Fing.remove("Ring Finger")
+def RRi():
+    if "Ring Finger" not in Fing:
+        Fing.insert(3,"Ring Finger")
+def Li():
+    if "Pinky" in Fing:
+        Fing.remove("Pinky")
+def RLi():
+    if "Pinky" not in Fing:
+        Fing.insert(4,"Pinky")
+
 cap = cv2.VideoCapture(0)
 
 #Call hand pipe line module
@@ -12,7 +46,7 @@ mpHands = mp.solutions.hands
 hands = mpHands.Hands()
 mpDraw = mp.solutions.drawing_utils
 
-while True:
+while True: 
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = hands.process(imgRGB)
@@ -23,89 +57,61 @@ while True:
             for id, lm in enumerate(handLms.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                if id == 8:
-                    id8 = int(id)
-                    cy8 = cy
-                if id == 7:
-                    id7 = int(id)
-                    cy7 = cy
+                for num in range(21):
+                    if id==num:
+                        idX[num] = int(id)
+                        cyX[num] = cy
+                        cxX[num] = cx
+                    num +=1
             
-                if id == 12:
-                    id12 = int(id)
-                    cy12 = cy
-                if id == 11:
-                    id11 = int(id)
-                    cy11 = cy
-
-                if id == 16:
-                    id16 = int(id)
-                    cy16 = cy
-                if id == 15:
-                    id15 = int(id)
-                    cy15 = cy
-
-                if id == 20:
-                    id20 = int(id)
-                    cy20 = cy
-                if id == 19:
-                    id19 = int(id)
-                    cy19 = cy
-                
-                if id == 4:
-                    id4 = int(id)
-                    cx4 = cx
-                if id == 3:
-                    id3 = int(id)
-                    cx3 = cx
-
-                if id == 5:
-                    id5 = int(id)
-                    cx5 = cx
-                if id == 17:
-                    id17 = int(id)
-                    cx17 = cx
-
-                      
-            if cy8 > cy7:
-                if "Index Finger" in Fing:
-                    Fing.remove("Index Finger")
-            if cy8 < cy7:
-                if "Index Finger" not in Fing:
-                    Fing.insert(1,"Index Finger")
-            if cy12 > cy11:
-                if "Middle Finger" in Fing:
-                    Fing.remove("Middle Finger")
-            if cy12 < cy11:
-                if "Middle Finger" not in Fing:
-                    Fing.insert(2,"Middle Finger")
-            if cy16 > cy15:
-                if "Ring Finger" in Fing:
-                    Fing.remove("Ring Finger")
-            if cy16 < cy15:
-                if "Ring Finger" not in Fing:
-                    Fing.insert(3,"Ring Finger")
-            if cy20 > cy19:
-                if "Little Finger" in Fing:
-                    Fing.remove("Little Finger")
-            if cy20 < cy19:
-                if "Little Finger" not in Fing:
-                    Fing.insert(4,"Little Finger")
-            if cx17 > cx5:
-                if cx4 > cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 < cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-            if cx17 < cx5:
-                if cx4 < cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 > cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-            
-               
+            #normal case *********************************************************
+            if cyX[0] > cyX[5]:
+                if cyX[8] > cyX[7]:
+                    In()
+                if cyX[8] < cyX[7]:
+                    RIn()
+                if cyX[12] > cyX[11]:
+                    Mi()
+                if cyX[12] < cyX[11]:
+                    RMi()
+                if cyX[16] > cyX[15]:
+                    Ri()
+                if cyX[16] < cyX[15]:
+                    RRi()
+                if cyX[20] > cyX[19]:
+                    Li()
+                if cyX[20] < cyX[19]:
+                    RLi()
+            #Thump x axis *********************************************************
+            if cxX[17] > cxX[5]: 
+                if cxX[4] > cxX[3]:
+                    Th()
+                if cxX[4] < cxX[3]:
+                    RTh()
+            if cxX[17] < cxX[5]:
+                if cxX[4] < cxX[3]:
+                    Th()
+                if cxX[4] > cxX[3]:
+                    RTh()
+            #If hand point down *********************************************************
+            if ((cyX[0] < cyX[17]) and cyX[17] > cyX[5]):
+                if cyX[8] < cyX[7]:
+                    In()
+                if cyX[8] > cyX[7]:
+                    RIn()
+                if cyX[12] < cyX[11]:
+                    Mi()
+                if cyX[12] > cyX[11]:
+                    RMi()
+                if cyX[16] < cyX[15]:
+                    Ri()
+                if cyX[16] > cyX[15]:
+                    RRi()
+                if cyX[20] < cyX[19]:
+                    Li()
+                if cyX[20] > cyX[19]:
+                    RLi()
+            #*******************************************************************************
             Nfing=len(Fing)       
 
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)

@@ -1,181 +1,228 @@
 #This code demonstrate how to show location of hand landmark
 import cv2
+from cvzone.HandTrackingModule import HandDetector 
+detector = HandDetector(detectionCon=0.5,maxHands=2)
 import mediapipe as mp
 
-Nfing = 5
-Fing=["Thump", "Index Finger", "Middle Finger", "Ring Finger", "Little Finger"]
-num=1
 
 cap = cv2.VideoCapture(0)
 
+f1=[None]*5
+f2=[None]*5
+Fing=["Thumb1", "Index Finger1", "Middle Finger1", "Ring Finger1", "Pinky1"]
+Fing2=["Thumb2", "Index Finger2", "Middle Finger2", "Ring Finger2", "Pinky2"]
+cyX=[None]*21
+cxX=[None]*21
+idX =[None]*21
+num=0
+def Th():
+    if "Thumb1" in Fing:
+        Fing.remove("Thumb1")
+def RTh():
+    if "Thumb1" not in Fing:
+        Fing.insert(0,"Thumb1")
+def In():
+    if "Index Finger1" in Fing:
+        Fing.remove("Index Finger1")
+def RIn():
+    if "Index Finger1" not in Fing:
+        Fing.insert(1,"Index Finger1")
+def Mi():
+    if "Middle Finger1" in Fing:
+        Fing.remove("Middle Finger1")
+def RMi():
+    if "Middle Finger1" not in Fing:
+        Fing.insert(2,"Middle Finger1")
+def Ri():
+    if "Ring Finger1" in Fing:
+        Fing.remove("Ring Finger1")
+def RRi():
+    if "Ring Finger1" not in Fing:
+        Fing.insert(3,"Ring Finger1")
+def Li():
+    if "Pinky1" in Fing:
+        Fing.remove("Pinky1")
+def RLi():
+    if "Pinky1" not in Fing:
+        Fing.insert(4,"Pinky1")
+#****************************************************************
+def Th2():
+    if "Thumb2" in Fing2:
+        Fing2.remove("Thumb2")
+def RTh2():
+    if "Thumb2" not in Fing2:
+        Fing2.insert(0,"Thumb2")
+def In2():
+    if "Index Finger2" in Fing2:
+        Fing2.remove("Index Finger2")
+def RIn2():
+    if "Index Finger2" not in Fing2:
+        Fing2.insert(1,"Index Finger2")
+def Mi2():
+    if "Middle Finger2" in Fing2:
+        Fing2.remove("Middle Finger2")
+def RMi2():
+    if "Middle Finger2" not in Fing2:
+        Fing2.insert(2,"Middle Finger2")
+def Ri2():
+    if "Ring Finger2" in Fing2:
+        Fing2.remove("Ring Finger2")
+def RRi2():
+    if "Ring Finger2" not in Fing2:
+        Fing2.insert(3,"Ring Finger2")
+def Li2():
+    if "Pinky2" in Fing2:
+        Fing2.remove("Pinky2")
+def RLi2():
+    if "Pinky2" not in Fing2:
+        Fing2.insert(4,"Pinky2")
 #Call hand pipe line module
 mpHands = mp.solutions.hands
-hands = mpHands.Hands()
+handS = mpHands.Hands()
 mpDraw = mp.solutions.drawing_utils
 
-while True: 
+while True:
     success, img = cap.read()
+    hands , img=detector.findHands(img)
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = hands.process(imgRGB)
-    #print(results.multi_hand_landmarks)
-    
+    results = handS.process(imgRGB)
     if results.multi_hand_landmarks:
         for handLms in results.multi_hand_landmarks:
             for id, lm in enumerate(handLms.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                if id == 8:
-                    id8 = int(id)
-                    cy8 = cy
-                    cx8 =cx
-                if id == 6:
-                    id6 = int(id)
-                    cy6 = cy
-                    cx6 = cx
-            
-                if id == 12:
-                    id12 = int(id)
-                    cy12 = cy
-                    cx12 = cx
-                if id == 10:
-                    id10 = int(id)
-                    cy10 = cy
-                    cx10 = cx
-
-                if id == 16:
-                    id16 = int(id)
-                    cy16 = cy
-                    cx16 = cx
-                if id == 14:
-                    id14 = int(id)
-                    cy14 = cy
-                    cx14 = cx
-
-                if id == 20:
-                    id20 = int(id)
-                    cy20 = cy
-                    cx20 = cx
-                if id == 18:
-                    id18 = int(id)
-                    cy18 = cy
-                    cx18 = cx
-                
-                if id == 4:
-                    id4 = int(id)
-                    cx4 = cx
-                    cy4 = cy
-                if id == 3:
-                    id3 = int(id)
-                    cx3 = cx
-                    cy3 = cy
-
-                if id == 5:
-                    id5 = int(id)
-                    cx5 = cx
-                    cy5= cy
-                if id == 17:
-                    id17 = int(id)
-                    cx17 = cx
-                    cy17 = cy
-
-                if id==0:
-                    id0 = int(id)
-                    cy0 = cy
-                    cx0 = cx
-            #normal case *********************************************************
-            if cy8 > cy6:
-                if "Index Finger" in Fing:
-                    Fing.remove("Index Finger")
-            elif cy8 < cy6:
-                if "Index Finger" not in Fing:
-                    Fing.insert(1,"Index Finger")
-            elif cy12 > cy10:
-                if "Middle Finger" in Fing:
-                    Fing.remove("Middle Finger")
-            elif cy12 < cy10:
-                if "Middle Finger" not in Fing:
-                    Fing.insert(2,"Middle Finger")
-            elif cy16 > cy14:
-                if "Ring Finger" in Fing:
-                    Fing.remove("Ring Finger")
-            elif cy16 < cy14:
-                if "Ring Finger" not in Fing:
-                    Fing.insert(3,"Ring Finger")
-            elif cy20 > cy18:
-                if "Little Finger" in Fing:
-                    Fing.remove("Little Finger")
-            elif cy20 < cy18:
-                if "Little Finger" not in Fing:
-                    Fing.insert(4,"Little Finger")
-            #Thump x axis *********************************************************
-            elif cx17 > cx5: 
-                if cx4 > cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 < cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-            elif cx17 < cx5:
-                if cx4 < cx3:
-                    if "Thump" in Fing:
-                        Fing.remove("Thump")
-                if cx4 > cx3:
-                    if "Thump" not in Fing:
-                        Fing.insert(0,"Thump")
-            #If hand point down *********************************************************
-            elif cy0 < cy17:
-                if cy8 < cy6:
-                    if "Index Finger" in Fing:
-                        Fing.remove("Index Finger")
-                if cy8 > cy6:
-                    if "Index Finger" not in Fing:
-                        Fing.insert(1,"Index Finger")
-                if cy12 < cy10:
-                    if "Middle Finger" in Fing:
-                        Fing.remove("Middle Finger")
-                if cy12 > cy10:
-                    if "Middle Finger" not in Fing:
-                        Fing.insert(2,"Middle Finger")
-                if cy16 < cy14:
-                    if "Ring Finger" in Fing:
-                        Fing.remove("Ring Finger")
-                if cy16 > cy14:
-                    if "Ring Finger" not in Fing:
-                        Fing.insert(3,"Ring Finger")
-                if cy20 < cy18:
-                    if "Little Finger" in Fing:
-                        Fing.remove("Little Finger")
-                if cy20 > cy18:
-                    if "Little Finger" not in Fing:
-                        Fing.insert(4,"Little Finger")
-            #Thump y axis and other fingers x axis *********************************************************
-            # if cx0 > cx5:
-            #     if cx4 > cx3:
-            #         if "Thump" in Fing:
-            #             Fing.remove("Thump")
-            #     if cx4 < cx3:
-            #         if "Thump" not in Fing:
-            #             Fing.insert(0,"Thump")
-                
-            # if cx0 < cx5:
-            #     if cy4 < cy3:
-            #         if "Thump" in Fing:
-            #             Fing.remove("Thump")
-            #     if cy4 > cy3:
-            #         if "Thump" not in Fing:
-            #             Fing.insert(0,"Thump")
-                
-            #*******************************************************************************
-            Nfing=len(Fing)       
-
-            mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)
+                for num in range(21):
+                    if id==num:
+                        idX[num] = int(id)
+                        cyX[num] = cy
+                        cxX[num] = cx
+                    num +=1
+            if hands:
+                hands1=hands[0]
+                f1=detector.fingersUp(hands1)
+            if len(hands)==2:
+                hands2=hands[1]
+                f2=detector.fingersUp(hands2)
+            if f1[0]==0:
+                if "Thumb1" in Fing:
+                    Fing.remove("Thumb1")
+            if f1[0]==1:
+                if "Thumb1" not in Fing:
+                    Fing.insert(0,"Thumb1")
+            if f1[1]==0:
+                if "Index Finger1" in Fing:
+                    Fing.remove("Index Finger1")
+            if f1[1]==1:
+                if "Index Finger1" not in Fing:
+                    Fing.insert(1,"Index Finger1")
+            if f1[2]==0:
+                if "Middle Finger1" in Fing:
+                    Fing.remove("Middle Finger1")
+            if f1[2]==1:
+                if "Middle Finger1" not in Fing:
+                    Fing.insert(2,"Middle Finger1")
+            if f1[3]==0:
+                if "Ring Finger1" in Fing:
+                    Fing.remove("Ring Finger1")
+            if f1[3]==1:
+                if "Ring Finger1" not in Fing:
+                    Fing.insert(3,"Ring Finger1")
+            if f1[4]==0:
+                if "Pinky1" in Fing:
+                    Fing.remove("Pinky1")
+            if f1[4]==1:
+                if "Pinky1" not in Fing:
+                    Fing.insert(4,"Pinky1")
+            #*****************************
+            if f2[0]==0:
+                if "Thumb2" in Fing2:
+                    Fing2.remove("Thumb2")
+            if f2[0]==1:
+                if "Thumb2" not in Fing2:
+                    Fing2.insert(0,"Thumb2")
+            if f2[1]==0:
+                if "Index Finger2" in Fing2:
+                    Fing2.remove("Index Finger2")
+            if f2[1]==1:
+                if "Index Finger2" not in Fing2:
+                    Fing2.insert(1,"Index Finger2")
+            if f2[2]==0:
+                if "Middle Finger2" in Fing2:
+                    Fing2.remove("Middle Finger2")
+            if f2[2]==1:
+                if "Middle Finger2" not in Fing2:
+                    Fing2.insert(2,"Middle Finger2")
+            if f2[3]==0:
+                if "Ring Finger2" in Fing2:
+                    Fing2.remove("Ring Finger2")
+            if f2[3]==1:
+                if "Ring Finger2" not in Fing2:
+                    Fing2.insert(3,"Ring Finger2")
+            if f2[4]==0:
+                if "Pinky2" in Fing2:
+                    Fing2.remove("Pinky2")
+            if f2[4]==1:
+                if "Pinky2" not in Fing2:
+                    Fing2.insert(4,"Pinky2")
+            if cyX[0] > cyX[17]:
+                if f1[0]==1:
+                    if "Thumb1" in Fing:
+                        Fing.remove("Thumb1")
+                if f1[0]==0:
+                    if "Thumb1" not in Fing:
+                        Fing.insert(0,"Thumb1")
+                if f1[1]==1:
+                    In()
+                if f1[1]==0:
+                    RIn()
+                if f1[2]==1:
+                    Mi()
+                if f1[2]==0:
+                    RMi()
+                if f1[3]==1:
+                    Ri()
+                if f1[3]==0:
+                    RRi()
+                if f1[4]==1:
+                    Li()
+                if f1[4]==0:
+                    RLi
+                #***********************************
+                if f2[0]==1:
+                    if "Thumb2" in Fing2:
+                        Fing2.remove("Thumb2")
+                if f2[0]==0:
+                    if "Thumb2" not in Fing2:
+                        Fing2.insert(0,"Thumb2")
+                if f2[1]==1:
+                    In2()
+                if f2[1]==0:
+                    RIn2()
+                if f2[2]==1:
+                    Mi2()
+                if f2[2]==0:
+                    RMi2()
+                if f2[3]==1:
+                    Ri2()
+                if f2[3]==0:
+                    RRi2()
+                if f2[4]==1:
+                    Li2()
+                if f2[4]==0:
+                    RLi2()
     
-    cv2.putText(img, str(Fing), (10, 70), cv2.FONT_HERSHEY_PLAIN, 1.2,
+    Nfing=len(Fing)+len(Fing2)
+    cv2.putText(img, str(Fing), (10, 70), cv2.FONT_HERSHEY_PLAIN, 1.1,
                 (255, 0, 255), 2)
-
-    cv2.putText(img, str(int(Nfing)), (10, 120), cv2.FONT_HERSHEY_PLAIN, 3,
+    cv2.putText(img, str(Fing2), (10, 120), cv2.FONT_HERSHEY_PLAIN, 1.1,
+                (255, 0, 255), 2)
+    cv2.putText(img, str(Nfing), (10, 170), cv2.FONT_HERSHEY_PLAIN, 3,
                 (255, 0, 255), 3)
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
+                
+    img = cv2.imshow("Image", img)
+    
+    if cv2.waitKey(1)&0xFF==27:
+        break
+cap.relase()
 #Closeing all open windows
-#cv2.destroyAllWindows()
+cv2.destroyAllWindows()
