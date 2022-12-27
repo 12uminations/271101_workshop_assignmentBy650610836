@@ -7,6 +7,6 @@ while True:
     success, img = cap.read()
     cv2.imshow("Image", img)
     cv2.waitKey(1)
- 
+
 #Closeing all open windows
 #cv2.destroyAllWindows()

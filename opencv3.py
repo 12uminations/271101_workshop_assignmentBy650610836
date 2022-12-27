@@ -29,5 +29,6 @@ while True:
                 (255, 0, 255), 3)
     cv2.imshow("Image", img)
     cv2.waitKey(1)
+    
 #Closeing all open windows
 #cv2.destroyAllWindows()
